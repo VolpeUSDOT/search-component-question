@@ -2,21 +2,24 @@ import './style.css'
 
 import FeatureLayer from '@arcgis/core/layers/FeatureLayer.js'
 import LayerSearchSource from '@arcgis/core/widgets/Search/LayerSearchSource.js'
-import "@arcgis/map-components/components/arcgis-map";
+import '@arcgis/map-components/components/arcgis-map'
 import '@arcgis/map-components/components/arcgis-search'
 
 const arcgisMap = document.querySelector('arcgis-map')
 
 arcgisMap.addEventListener('arcgisViewReadyChange', (event) => {
-  
     let MapComponent = event.target
 
     // ADD THE LAYER
-    let railLayer = new FeatureLayer({ url: 'https://services.arcgis.com/xOi1kZaI0eWDREZv/arcgis/rest/services/NTAD_North_American_Rail_Network_Lines/FeatureServer/0' })
+    let railLayer = new FeatureLayer({
+        url: 'https://services.arcgis.com/xOi1kZaI0eWDREZv/arcgis/rest/services/NTAD_North_American_Rail_Network_Lines/FeatureServer/0'
+    })
     MapComponent.map?.add(railLayer)
 
-    // SET UP THE CUSTOM SEARCH SOURCE
-    let railSubdivSearchSource = new LayerSearchSource({
+    const search = document.querySelector('arcgis-search')
+    //await search.componentOnReady();
+
+    search.sources.add({
         layer: railLayer,
         placeholder: 'MBTA',
         searchFields: ['SUBDIV'],
@@ -29,14 +32,14 @@ arcgisMap.addEventListener('arcgisViewReadyChange', (event) => {
             query.returnGeometry = false
             query.returnDistinctValues = true
             query.where = `SUBDIV like '%${params.suggestTerm}%'`
-            return railLayer.queryFeatures(query).then((featureSet) => {                
-                let myresult =  featureSet.features.map((feature) => {
+            return railLayer.queryFeatures(query).then((featureSet) => {
+                let myresult = featureSet.features.map((feature) => {
                     return {
                         key: 'name',
                         text: feature.attributes['SUBDIV'],
                         sourceIndex: params.sourceIndex
                     }
-                })                
+                })
                 return myresult
             })
         },
@@ -45,7 +48,39 @@ arcgisMap.addEventListener('arcgisViewReadyChange', (event) => {
             console.log(`did you really choose: ${params.suggestResult.text}?`)
         }
     })
-    let arcgisCustomSearch = document.getElementById('arcgis-custom-search') 
-    arcgisCustomSearch.sources.add(railSubdivSearchSource)
+
+    search.addEventListener('arcgisPropertyChange', async (e) => {
+     console.log('arcgisPropertyChange', e)
+    })
+
+
+    search.addEventListener('arcgisReady', async () => {
+     console.log('arcgisReady')
+    })
+
+
+    search.addEventListener('arcgisSearchClear', async () => {
+     console.log('arcgisSearchClear')
+    })
+
+    search.addEventListener('arcgisSearchComplete', async () => {
+     console.log('arcgisSearchComplete')
+    })
+
+    search.addEventListener('arcgisSearchStart', async () => {
+    console.log('arcgisSearchStart')
+    })
+
+    search.addEventListener('arcgisSelectResult', async () => {
+      console.log('arcgisSelectResult')
+    })
+
+    search.addEventListener("arcgisSuggestComplete", async () => {
+    console.log('arcgisSuggestComplete')
+    })
+
+    search.addEventListener("arcgisSuggestStart", async () => {
+      console.log('arcgisSuggestStart')
+    })
 
 })
