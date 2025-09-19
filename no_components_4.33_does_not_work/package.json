@@ -1,0 +1,18 @@
+{
+    "name": "gmb_basic_esri_template",
+    "version": "0.0.0",
+    "type": "module",
+    "scripts": {
+        "dev": "vite",
+        "build": "vite build"
+    },
+    "devDependencies": {
+        "prettier": "^3.6",
+        "typescript": "^5.8",
+        "vite": "^6.3"
+    },
+    "dependencies": {
+        "@arcgis/core": "~4.33",
+        "@arcgis/map-components": "~4.33.0"
+    }
+}

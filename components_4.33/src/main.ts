@@ -45,42 +45,14 @@ arcgisMap.addEventListener('arcgisViewReadyChange', (event) => {
         },
         getResults: (params) => {
             // ****** if you look in the console you will see it always returns the first item
-            console.log(`did you really choose: ${params.suggestResult.text}?`)
+            console.log(`Did you really choose: ${params.suggestResult.text}?`)
         }
     })
 
-    search.addEventListener('arcgisPropertyChange', async (e) => {
-     console.log('arcgisPropertyChange', e)
-    })
-
-
-    search.addEventListener('arcgisReady', async () => {
-     console.log('arcgisReady')
-    })
-
-
-    search.addEventListener('arcgisSearchClear', async () => {
-     console.log('arcgisSearchClear')
-    })
-
-    search.addEventListener('arcgisSearchComplete', async () => {
-     console.log('arcgisSearchComplete')
-    })
-
-    search.addEventListener('arcgisSearchStart', async () => {
-    console.log('arcgisSearchStart')
-    })
 
     search.addEventListener('arcgisSelectResult', async () => {
       console.log('arcgisSelectResult')
     })
 
-    search.addEventListener("arcgisSuggestComplete", async () => {
-    console.log('arcgisSuggestComplete')
-    })
-
-    search.addEventListener("arcgisSuggestStart", async () => {
-      console.log('arcgisSuggestStart')
-    })
 
 })
