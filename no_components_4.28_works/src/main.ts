@@ -10,7 +10,7 @@ const theMap = new Map({
 })
 
 let railLayer = new FeatureLayer({
-    url: 'https://services.arcgis.com/xOi1kZaI0eWDREZv/arcgis/rest/services/NTAD_North_American_Rail_Network_Lines/FeatureServer/0'
+    url: 'https://services.arcgis.com/xOi1kZaI0eWDREZv/arcgis/rest/services/rail_lines_test/FeatureServer/0'
 })
 
 theMap.add(railLayer)
@@ -30,7 +30,7 @@ const mySearchSource = new SearchSource({
         query.outFields = ['SUBDIV']
         query.returnGeometry = false
         query.returnDistinctValues = true
-        query.geometry = view.extent
+        // query.geometry = view.extent
         query.where = `SUBDIV like '%${params.suggestTerm}%'`
 
         return railLayer.queryFeatures(query).then((featureSet) => {
